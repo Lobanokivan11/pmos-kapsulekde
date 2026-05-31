@@ -18,10 +18,10 @@ tar -xzf apk-tools-static-3.0.6-r0.apk sbin/apk.static
 rm apk-tools-static-3.0.6-r0.apk
 sudo ./sbin/apk.static --repository https://dl-cdn.alpinelinux.org/alpine/edge/testing --repository https://dl-cdn.alpinelinux.org/alpine/edge/community --repository https://dl-cdn.alpinelinux.org/alpine/edge/main --update-cache --allow-untrusted --root "$ROOTFS_DIR" --initdb add alpine-base
 rm -rf sbin
-cp "$SCRIPT_DIR/setup-rootfs.sh" "$PMOS_ROOTFS/"
-cp /etc/resolv.conf "$PMOS_ROOTFS/etc/resolv.conf"
-chroot "$PMOS_ROOTFS" /bin/sh /setup-rootfs.sh
-rm -f "$PMOS_ROOTFS/setup-rootfs.sh" "$PMOS_ROOTFS/etc/resolv.conf"
+cp "$SCRIPT_DIR/setup-rootfs.sh" "$ROOTFS_DIR/"
+cp /etc/resolv.conf "$ROOTFS_DIR/etc/resolv.conf"
+chroot "$ROOTFS_DIR" /bin/sh /setup-rootfs.sh
+rm -f "$ROOTFS_DIR/setup-rootfs.sh" "$ROOTFS_DIR/etc/resolv.conf"
 mkosi --directory="$SCRIPT_DIR" --image="$IMAGE_NAME" build
 
 
