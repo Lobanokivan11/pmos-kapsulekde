@@ -10,11 +10,19 @@ fi
 
 OUTPUT_BASE="$1"
 IMAGE_NAME="pmos"
-
+ROOTFS_DIR="$SCRIPT_DIR/mkosi.output/$IMAGE_NAME"
 echo "Building postmarketOS image with mkosi ..."
+wget https://dl-cdn.alpinelinux.org/alpine/edge/main/x86_64/apk-tools-static-3.0.6-r0.apk
+tar -xzf apk-tools-static-3.0.6-r0.apksbin/apk.static
+rm apk-tools-static-3.0.6-r0.apk
+sudo ./sbin/apk.static --repository https://dl-cdn.alpinelinux.org/alpine/edge/testing --repository https://dl-cdn.alpinelinux.org/alpine/edge/community --repository https://dl-cdn.alpinelinux.org/alpine/edge/main --update-cache --allow-untrusted --root "$ROOTFS_DIR" --initdb add alpine-base
+rm -rf sbin
+cp "$SCRIPT_DIR/setup-rootfs.sh" "$PMOS_ROOTFS/"
+cp /etc/resolv.conf "$PMOS_ROOTFS/etc/resolv.conf"
+chroot "$PMOS_ROOTFS" /bin/sh /setup-rootfs.sh
+rm -f "$PMOS_ROOTFS/setup-rootfs.sh" "$PMOS_ROOTFS/etc/resolv.conf"
 mkosi --directory="$SCRIPT_DIR" --image="$IMAGE_NAME" build
 
-ROOTFS_DIR="$SCRIPT_DIR/mkosi.output/$IMAGE_NAME"
 
 if [ ! -d "$ROOTFS_DIR" ]; then
     echo "Error: no output for $IMAGE_NAME at $ROOTFS_DIR" >&2
