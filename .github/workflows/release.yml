@@ -1,0 +1,43 @@
+name: Build and Release PMOS Kapsule
+
+on:
+  workflow_dispatch:
+  push:
+    branches: main
+  schedule:
+  - cron: "0 * * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y mkosi squashfs-tools xz-utils python3
+
+      - name: Run PMOS Build and Package Script
+        run: |
+          sudo ./images/build-pmos.sh out/
+
+      - name: Prepare Release Artifacts
+        id: prepare_assets
+        run: |
+          VERSION=$(cat out/pmos/version)
+          echo "build_version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Release pmos
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ./out/pmos/*
+          tag: build
+          overwrite: true
+          body: "pmos build for kde kapsule"
+          file_glob: true
