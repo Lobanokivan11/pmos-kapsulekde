@@ -17,4 +17,5 @@ sudo cp incus.tar.xz /var/lib/kapsule/imports/pmos/incus.tar.xz
 cd ~
 rm -r tmp
 kapsule image import /var/lib/kapsule/imports/pmos/ --alias pmos
+kapsule create pmos -i local:pmos
 ```
