@@ -24,7 +24,7 @@ jobs:
 
       - name: Run PMOS Build and Package Script
         run: |
-          sudo ./images/build-pmos.sh out/
+          sudo ./build-pmos.sh out/
 
       - name: Prepare Release Artifacts
         id: prepare_assets
