@@ -22,6 +22,7 @@ cp "$SCRIPT_DIR/setup-rootfs.sh" "$ROOTFS_DIR/"
 cp /etc/resolv.conf "$ROOTFS_DIR/etc/resolv.conf"
 chroot "$ROOTFS_DIR" /bin/sh /setup-rootfs.sh
 rm -f "$ROOTFS_DIR/setup-rootfs.sh" "$ROOTFS_DIR/etc/resolv.conf"
+mkdir -p "$SCRIPT_DIR/pmos-cache"
 mkosi --directory="$SCRIPT_DIR" --image="$IMAGE_NAME" build
 
 
