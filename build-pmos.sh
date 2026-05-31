@@ -12,6 +12,7 @@ OUTPUT_BASE="$1"
 IMAGE_NAME="pmos"
 ROOTFS_DIR="$SCRIPT_DIR/mkosi.output/$IMAGE_NAME"
 echo "Building postmarketOS image with mkosi ..."
+mkdir -p "$ROOTFS_DIR"
 wget https://dl-cdn.alpinelinux.org/alpine/edge/main/x86_64/apk-tools-static-3.0.6-r0.apk
 tar -xzf apk-tools-static-3.0.6-r0.apk sbin/apk.static
 rm apk-tools-static-3.0.6-r0.apk
