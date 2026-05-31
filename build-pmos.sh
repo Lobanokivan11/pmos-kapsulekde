@@ -28,6 +28,8 @@ cp "$SCRIPT_DIR/setup-rootfs.sh" "$ROOTFS_DIR/"
 cp /etc/resolv.conf "$ROOTFS_DIR/etc/resolv.conf"
 chroot "$ROOTFS_DIR" /bin/sh /setup-rootfs.sh
 rm -f "$ROOTFS_DIR/setup-rootfs.sh" "$ROOTFS_DIR/etc/resolv.conf"
+echo "nameserver 1.1.1.1" > "$ROOTFS_DIR/etc/resolv.conf"
+echo "nameserver 8.8.8.8" >> "$ROOTFS_DIR/etc/resolv.conf"
 mkdir -p "$SCRIPT_DIR/pmos-cache"
 if [ -f "$ROOTFS_DIR/etc/pam.d/login" ]; then
     sed -i '/pam_nologin.so/s/^/#/' "$ROOTFS_DIR/etc/pam.d/login"
