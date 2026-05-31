@@ -21,9 +21,14 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y mkosi squashfs-tools xz-utils python3
+          export PATH="$HOME/.local/bin:$PATH"
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          uv tool install mkosi
+          mkosi --version
 
       - name: Run PMOS Build and Package Script
         run: |
+          export PATH="$HOME/.local/bin:$PATH"
           sudo bash build-pmos.sh out/
 
       - name: Prepare Release Artifacts
