@@ -31,6 +31,7 @@ jobs:
           ROOTFS_DIR: ${{ github.workspace }}/pmos-rootfs
           PMOS_CACHE_DIR: ${{ github.workspace }}/pmos-cache
         run: |
+          chmod -R 777 .
           export PATH="$HOME/.local/bin:$PATH"
           sudo bash build-pmos.sh out/
 
