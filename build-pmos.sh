@@ -12,6 +12,8 @@ OUTPUT_BASE="$1"
 PMOS_CACHE_DIR="$SCRIPT_DIR/pmos-cache"
 IMAGE_NAME="pmos"
 ROOTFS_DIR="$SCRIPT_DIR/pmos-rootfs"
+MKOSI_CACHE_DIRECTORY="$PMOS_CACHE_DIR"
+MKOSI_BASE_TREES="$ROOTFS_DIR"
 echo "Building postmarketOS image with mkosi ..."
 mkdir -p "$ROOTFS_DIR"
 mkdir -p "$PMOS_CACHE_DIR"
@@ -25,7 +27,7 @@ cp /etc/resolv.conf "$ROOTFS_DIR/etc/resolv.conf"
 chroot "$ROOTFS_DIR" /bin/sh /setup-rootfs.sh
 rm -f "$ROOTFS_DIR/setup-rootfs.sh" "$ROOTFS_DIR/etc/resolv.conf"
 mkdir -p "$SCRIPT_DIR/pmos-cache"
-mkosi --directory="$SCRIPT_DIR" --image="$IMAGE_NAME" --force --cache-directory="$PMOS_CACHE_DIR" --base-tree="$ROOTFS_DIR" build
+mkosi --directory="$SCRIPT_DIR" --image="$IMAGE_NAME" --force build
 
 
 if [ ! -d "$ROOTFS_DIR" ]; then
